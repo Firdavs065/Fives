@@ -71,8 +71,9 @@ header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgb
 <div class="modal" id="addModal"><div class="modal-box"><span class="close" onclick="closeModal('addModal')">×</span><h3>Подать объявление</h3>
 <select id="f-cat"><option value="phone">Телефоны</option><option value="tech">Бытовая техника</option><option value="comp">Компьютеры</option></select>
 <input id="f-title" placeholder="Название: iPhone 13 Pro">
-<input id="f-price" placeholder="Цена: 4500000">
-<input id="f-img" placeholder="Ссылка на фото (https://...) - обязательно">
+<input id="f-price" placeholder="Цена: 4500000>
+  <input type="file" id="f-img-file" accept="image/*" onchange="previewImg(event)">
+<img id="imgPreview" style="width:100%;border-radius:10px;display:none;margin-top:8px;max-height:200px;object-fit:cover">
 <input id="f-city" placeholder="Город: Худжанд">
 <input id="f-phone" placeholder="Телефон: +992 92...">
 <textarea id="f-desc" placeholder="Описание..."></textarea>
