@@ -107,10 +107,24 @@ window.toggleLike=async(i)=>{
 };
 window.openAdd=()=>{ if(!currentUser){ alert("Чтобы подать объявление, сначала войдите!"); openLogin(); return; } document.getElementById('addModal').style.display='block'; }
 window.closeModal=(id)=>{ document.getElementById(id).style.display='none'; }
+let uploadedImg = ""; // rasmni shu yerda saqlaymiz
+
+window.previewImg = (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    uploadedImg = ev.target.result;
+    const p = document.getElementById('imgPreview');
+    p.src = uploadedImg;
+    p.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+};
 window.addListing=async()=>{
   const title=document.getElementById('f-title').value.trim();
   const price=document.getElementById('f-price').value.trim();
-  const img=document.getElementById('f-img').value.trim();
+  const img = uploadedImg;
   const city=document.getElementById('f-city').value.trim();
   const phone=document.getElementById('f-phone').value.trim();
   const desc=document.getElementById('f-desc').value.trim()||title;
