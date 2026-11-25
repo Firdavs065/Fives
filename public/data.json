@@ -1,0 +1,58 @@
+[
+  {
+    "cat": "phone",
+    "img": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600",
+    "price": "4 500 000 so'm",
+    "city": "Xo'jand",
+    "phone": "+992 92 123 45 67",
+    "author": "Fives Shop",
+    "time": "bugun",
+    "views": 1240,
+    "likes": 45,
+    "title": {"uz": "iPhone 13 Pro 256GB - Ideal holatda", "ru": "iPhone 13 Pro 256GB - В идеале", "tj": "iPhone 13 Pro 256GB - Дар ҳолати идеалӣ"},
+    "desc": {"uz": "Holat ideal, hech qanday kamchiligi yo'q. Komplekt bor.", "ru": "Состояние идеальное, без дефектов. Комплект есть.", "tj": "Ҳолат идеалӣ, ҳеҷ камбудӣ нест. Комплект ҳаст."},
+    "comments": [{"user": "Ahmad", "text": "Hali bormi?"}]
+  },
+  {
+    "cat": "phone",
+    "img": "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600",
+    "price": "3 200 000 so'm",
+    "city": "Dushanbe",
+    "phone": "+992 93 555 11 22",
+    "author": "Mobile TJ",
+    "time": "kecha",
+    "views": 890,
+    "likes": 32,
+    "title": {"uz": "Samsung Galaxy S22 - Yangi", "ru": "Samsung Galaxy S22 - Новый", "tj": "Samsung Galaxy S22 - Нав"},
+    "desc": {"uz": "Yangi, karobkada, garantiya bilan.", "ru": "Новый, в коробке, с гарантией.", "tj": "Нав, дар қуттӣ, бо кафолат."},
+    "comments": []
+  },
+  {
+    "cat": "tech",
+    "img": "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=600",
+    "price": "2 800 000 so'm",
+    "city": "Xo'jand",
+    "phone": "+992 92 777 88 99",
+    "author": "Texnika Shop",
+    "time": "bugun",
+    "views": 540,
+    "likes": 18,
+    "title": {"uz": "Kir yuvish mashinasi LG 8kg", "ru": "Стиральная машина LG 8кг", "tj": "Мошини ҷомашӯии LG 8кг"},
+    "desc": {"uz": "Yangi, magazindan, garantiya 1 yil.", "ru": "Новая, из магазина, гарантия 1 год.", "tj": "Нав, аз мағоза, кафолат 1 сол."},
+    "comments": []
+  },
+  {
+    "cat": "comp",
+    "img": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600",
+    "price": "6 500 000 so'm",
+    "city": "Dushanbe",
+    "phone": "+992 90 111 22 33",
+    "author": "IT Market",
+    "time": "2 kun oldin",
+    "views": 2100,
+    "likes": 67,
+    "title": {"uz": "Noutbuk HP Core i5 / 16GB / SSD", "ru": "Ноутбук HP Core i5 / 16GB / SSD", "tj": "Ноутбук HP Core i5 / 16GB / SSD"},
+    "desc": {"uz": "Ishlash uchun ideal. Batareya zo'r.", "ru": "Идеален для работы. Батарея отличная.", "tj": "Барои кор идеалӣ. Батарея хуб."},
+    "comments": []
+  }
+]
