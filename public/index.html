@@ -5,44 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FIVES - Маркетплейс</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f6f8}
-header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.08)}
-.top{display:flex;align-items:center;gap:10px;padding:12px;max-width:1100px;margin:auto;flex-wrap:wrap}
-.logo{font-size:24px;font-weight:900;letter-spacing:3px;color:#0a7cff}
-.logo span{color:#ff6b00}
-.search{flex:1;display:flex;background:#f0f2f5;border-radius:10px;overflow:hidden;min-width:150px}
-.search input{flex:1;border:none;background:none;padding:11px;outline:none}
-.search button{border:none;background:#0a7cff;color:#fff;padding:0 16px;font-weight:bold}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+body{background:#f4f5f7;color:#111}
+header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06);border-bottom:1px solid #eee}
+.top{display:flex;align-items:center;gap:12px;padding:14px 12px;max-width:1100px;margin:auto;flex-wrap:wrap}
+.logo{font-size:24px;font-weight:900;letter-spacing:2px;color:#0a7cff}
+.logo span{color:#111}
+.search{flex:1;display:flex;background:#f0f2f5;border-radius:8px;overflow:hidden;min-width:150px}
+.search input{flex:1;border:none;background:none;padding:11px;outline:none;font-size:14px}
+.search button{border:none;background:#0a7cff;color:#fff;padding:0 18px;font-weight:600;cursor:pointer}
 .langs{display:flex;gap:5px}
-.langs button{padding:7px 10px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
-.langs button.active{background:#111;color:#fff}
-.add-btn{background:#ff6b00;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
-.login-btn{background:#111;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
-.wrap{max-width:1100px;margin:auto;padding:14px}
-.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
-.cats button{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
-.cats button.active{background:#0a7cff;color:#fff;border-color:#0a7cff}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.langs button{padding:7px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:13px}
+.langs button.active{background:#111;color:#fff;border-color:#111}
+.add-btn{background:#0a7cff;color:#fff;border:none;padding:11px 16px;border-radius:8px;font-weight:600;cursor:pointer}
+.login-btn{background:#fff;color:#111;border:1px solid #ddd;padding:11px 16px;border-radius:8px;font-weight:600;cursor:pointer}
+.wrap{max-width:1100px;margin:auto;padding:16px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px}
+.cats button{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:14px}
+.cats button.active{background:#111;color:#fff;border-color:#111}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.card{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid #eee}
 .card img{width:100%;height:180px;object-fit:cover}
-.card-body{padding:11px}
-.card-body h3{font-size:14px;line-height:1.3;height:36px;overflow:hidden}
-.price{color:#0a7cff;font-weight:900;font-size:16px;margin-top:6px}
+.card-body{padding:12px}
+.card-body h3{font-size:14px;line-height:1.4;height:38px;overflow:hidden;font-weight:600}
+.price{color:#0a7cff;font-weight:800;font-size:16px;margin-top:6px}
 .meta{font-size:12px;color:#888;margin-top:4px}
-.actions{display:flex;gap:6px;margin-top:9px}
-.actions button{flex:1;padding:8px;border-radius:8px;border:1px solid #eee;background:#f8f8f8;cursor:pointer}
-.empty{text-align:center;padding:60px 20px;background:#fff;border-radius:16px}
-.empty h2{margin-bottom:8px}
+.actions{display:flex;gap:6px;margin-top:10px}
+.actions button{flex:1;padding:8px;border-radius:8px;border:1px solid #eee;background:#f8f8f8;cursor:pointer;font-size:13px}
+.empty{text-align:center;padding:60px 20px;background:#fff;border-radius:16px;border:1px solid #eee}
+.empty h2{margin-bottom:8px;font-size:20px}
 .empty p{color:#888;margin-bottom:16px}
-.empty button{background:#ff6b00;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;cursor:pointer}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;padding:16px;overflow:auto}
-.modal-box{background:#fff;max-width:600px;margin:30px auto;border-radius:16px;padding:18px}
-.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
-.modal-box button{width:100%;padding:12px;background:#0a7cff;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px}
+.empty button{background:#0a7cff;color:#fff;border:none;padding:12px 22px;border-radius:8px;font-weight:600;cursor:pointer}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;padding:16px;overflow:auto}
+.modal-box{background:#fff;max-width:600px;margin:30px auto;border-radius:14px;padding:20px}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:8px;font-size:14px}
+.modal-box button{width:100%;padding:12px;background:#0a7cff;color:#fff;border:none;border-radius:8px;font-weight:600;margin-top:8px;cursor:pointer}
 .close{float:right;font-size:22px;cursor:pointer}
-.comments{margin-top:12px;background:#f8f8f8;padding:10px;border-radius:10px}
+.comments{margin-top:14px;background:#f8f8f8;padding:12px;border-radius:10px}
 .comments div{font-size:13px;padding:5px 0;border-bottom:1px solid #eee}
 </style>
 </head>
@@ -50,14 +50,14 @@ header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgb
 <header>
 <div class="top">
 <div class="logo">FIVES<span>.TJ</span></div>
-<div class="search"><input id="searchInput" placeholder="Поиск..."><button onclick="doSearch()">🔍</button></div>
+<div class="search"><input id="searchInput" placeholder="Поиск..."><button onclick="doSearch()">Найти</button></div>
 <div class="langs">
 <button onclick="setLang('uz',this)">UZ</button>
 <button onclick="setLang('ru',this)" class="active">RU</button>
 <button onclick="setLang('tj',this)">TJ</button>
 </div>
 <button class="login-btn" id="loginBtn" onclick="openLogin()">Вход</button>
-<button class="add-btn" onclick="openAdd()">+ Объявление</button>
+<button class="add-btn" onclick="openAdd()">Подать объявление</button>
 </div>
 </header>
 <div class="wrap">
@@ -69,7 +69,7 @@ header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgb
 <div class="modal" id="viewModal"><div class="modal-box"><span class="close" onclick="closeModal('viewModal')">×</span><div id="viewContent"></div></div></div>
 
 <div class="modal" id="addModal"><div class="modal-box"><span class="close" onclick="closeModal('addModal')">×</span><h3>Подать объявление</h3>
-<select id="f-cat"><option value="phone">📱 Телефоны</option><option value="tech">🔌 Бытовая техника</option><option value="comp">💻 Компьютеры</option></select>
+<select id="f-cat"><option value="phone">Телефоны</option><option value="tech">Бытовая техника</option><option value="comp">Компьютеры</option></select>
 <input id="f-title" placeholder="Название: iPhone 13 Pro">
 <input id="f-price" placeholder="Цена: 4500000">
 <input id="f-img" placeholder="Ссылка на фото (https://...) - обязательно">
@@ -90,4 +90,4 @@ header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgb
 
 <script type="module" src="app.js"></script>
 </body>
-</html>
+  </html>
