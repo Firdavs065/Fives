@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIVES - Bozor</title>
-<link rel="stylesheet" href="style.css">
+<title>FIVES - Маркетплейс</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 body{background:#f5f6f8}
 header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.08)}
-.top{display:flex;align-items:center;gap:10px;padding:12px;max-width:1100px;margin:auto}
+.top{display:flex;align-items:center;gap:10px;padding:12px;max-width:1100px;margin:auto;flex-wrap:wrap}
 .logo{font-size:24px;font-weight:900;letter-spacing:3px;color:#0a7cff}
 .logo span{color:#ff6b00}
-.search{flex:1;display:flex;background:#f0f2f5;border-radius:10px;overflow:hidden}
+.search{flex:1;display:flex;background:#f0f2f5;border-radius:10px;overflow:hidden;min-width:150px}
 .search input{flex:1;border:none;background:none;padding:11px;outline:none}
 .search button{border:none;background:#0a7cff;color:#fff;padding:0 16px;font-weight:bold}
 .langs{display:flex;gap:5px}
 .langs button{padding:7px 10px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
 .langs button.active{background:#111;color:#fff}
 .add-btn{background:#ff6b00;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
+.login-btn{background:#111;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
 .wrap{max-width:1100px;margin:auto;padding:14px}
 .cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
 .cats button{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
@@ -33,7 +33,10 @@ header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgb
 .meta{font-size:12px;color:#888;margin-top:4px}
 .actions{display:flex;gap:6px;margin-top:9px}
 .actions button{flex:1;padding:8px;border-radius:8px;border:1px solid #eee;background:#f8f8f8;cursor:pointer}
-.actions button.liked{color:red;border-color:red}
+.empty{text-align:center;padding:60px 20px;background:#fff;border-radius:16px}
+.empty h2{margin-bottom:8px}
+.empty p{color:#888;margin-bottom:16px}
+.empty button{background:#ff6b00;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;cursor:pointer}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;padding:16px;overflow:auto}
 .modal-box{background:#fff;max-width:600px;margin:30px auto;border-radius:16px;padding:18px}
 .modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
@@ -47,45 +50,44 @@ header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgb
 <header>
 <div class="top">
 <div class="logo">FIVES<span>.TJ</span></div>
-<div class="search"><input id="searchInput" placeholder="Qidiruv..."><button onclick="doSearch()">🔍</button></div>
+<div class="search"><input id="searchInput" placeholder="Поиск..."><button onclick="doSearch()">🔍</button></div>
 <div class="langs">
-<button onclick="setLang('uz',this)" class="active">UZ</button>
-<button onclick="setLang('ru',this)">RU</button>
+<button onclick="setLang('uz',this)">UZ</button>
+<button onclick="setLang('ru',this)" class="active">RU</button>
 <button onclick="setLang('tj',this)">TJ</button>
 </div>
-<button class="add-btn" onclick="openAdd()">+ Elon</button>
+<button class="login-btn" id="loginBtn" onclick="openLogin()">Вход</button>
+<button class="add-btn" onclick="openAdd()">+ Объявление</button>
 </div>
 </header>
-
 <div class="wrap">
 <div class="cats" id="cats"></div>
 <div class="grid" id="grid"></div>
+<div id="emptyBox"></div>
 </div>
 
-<!-- ELON KO'RISH -->
-<div class="modal" id="viewModal">
-<div class="modal-box">
-<span class="close" onclick="closeModal('viewModal')">×</span>
-<div id="viewContent"></div>
-</div>
-</div>
+<div class="modal" id="viewModal"><div class="modal-box"><span class="close" onclick="closeModal('viewModal')">×</span><div id="viewContent"></div></div></div>
 
-<!-- ELON QO'SHISH -->
-<div class="modal" id="addModal">
-<div class="modal-box">
-<span class="close" onclick="closeModal('addModal')">×</span>
-<h3 id="addTitle">Elon berish</h3>
-<select id="f-cat"><option value="phone">📱 Telefon</option><option value="tech">🔌 Maishiy texnika</option><option value="comp">💻 Kompyuter</option></select>
-<input id="f-title" placeholder="Nomi: iPhone 13 Pro">
-<input id="f-price" placeholder="Narxi: 4500000">
-<input id="f-img" placeholder="Rasm linki (https://...)">
-<input id="f-city" placeholder="Shahar: Xo'jand">
-<input id="f-phone" placeholder="Telefon: +992 92...">
-<textarea id="f-desc" placeholder="Tavsif..."></textarea>
-<button onclick="addListing()">Elonni joylash</button>
-</div>
-</div>
+<div class="modal" id="addModal"><div class="modal-box"><span class="close" onclick="closeModal('addModal')">×</span><h3>Подать объявление</h3>
+<select id="f-cat"><option value="phone">📱 Телефоны</option><option value="tech">🔌 Бытовая техника</option><option value="comp">💻 Компьютеры</option></select>
+<input id="f-title" placeholder="Название: iPhone 13 Pro">
+<input id="f-price" placeholder="Цена: 4500000">
+<input id="f-img" placeholder="Ссылка на фото (https://...) - обязательно">
+<input id="f-city" placeholder="Город: Худжанд">
+<input id="f-phone" placeholder="Телефон: +992 92...">
+<textarea id="f-desc" placeholder="Описание..."></textarea>
+<button onclick="addListing()">Разместить объявление</button>
+</div></div>
 
-<script src="app.js"></script>
+<div class="modal" id="loginModal"><div class="modal-box"><span class="close" onclick="closeModal('loginModal')">×</span><h3>Вход / Регистрация</h3>
+<input id="login-email" placeholder="Email">
+<input id="login-pass" type="password" placeholder="Пароль">
+<button onclick="loginEmail()">Войти по Email</button>
+<button onclick="registerEmail()" style="background:#111">Зарегистрироваться</button>
+<button onclick="loginGoogle()" style="background:#fff;color:#111;border:1px solid #ddd">Войти через Google</button>
+<p id="loginMsg" style="font-size:13px;color:red;margin-top:8px"></p>
+</div></div>
+
+<script type="module" src="app.js"></script>
 </body>
 </html>
