@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIVES - Telefon va Texnika</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111827">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{background:#fff;color:#111;display:flex}
+.sidebar{width:240px;position:fixed;height:100vh;border-right:1px solid #e5e5e5;padding:20px;display:flex;flex-direction:column;gap:6px}
+.logo{font-size:26px;font-weight:900;letter-spacing:-1px;margin-bottom:10px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer;font-size:16px}
+.nav-item:hover{background:#f5f5f5}
+.nav-item.active{font-weight:800}
+.main{margin-left:240px;flex:1;max-width:680px;padding:20px}
+.lang{display:flex;gap:6px;margin-bottom:12px}
+.lang button{padding:8px 12px;border-radius:999px;border:1px solid #e5e5e5;background:#fff;cursor:pointer;font-weight:700}
+.topbar{display:flex;gap:12px;margin-bottom:20px}
+.topbar input{flex:1;padding:12px 16px;border:1px solid #e5e5e5;border-radius:12px;background:#fafafa}
+.btn{padding:12px 20px;border-radius:12px;border:0;font-weight:700;cursor:pointer}
+.btn-dark{background:#111;color:#fff}
+.btn-vip{background:#ffcc00;color:#111}
+.post{border:1px solid #e5e5e5;border-radius:16px;margin-bottom:16px;overflow:hidden}
+.post-head{display:flex;align-items:center;gap:10px;padding:14px}
+.post-head img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.post img.main-img{width:100%;height:420px;object-fit:cover}
+.post-body{padding:14px}
+.price{font-size:22px;font-weight:900}
+.vip-badge{background:#ffcc00;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:50}
+.modal.show{display:flex}
+.box{background:#fff;border-radius:20px;width:95%;max-width:520px;padding:24px;max-height:90vh;overflow-y:auto}
+.box input,.box select,.box textarea{width:100%;padding:12px;border:1px solid #e5e5e5;border-radius:10px;margin:6px 0}
+.box label{font-size:12px;font-weight:700;color:#666}
+@media(max-width:768px){.sidebar{display:none}.main{margin:0;padding:12px}}
+</style>
+</head>
+<body>
+<div class="sidebar">
+<div class="logo">FIVES</div>
+<div class="nav-item active" data-t="home">Asosiy</div>
+<div class="nav-item" data-t="search">Qidirish</div>
+<div class="nav-item" data-t="messages">Xabarlar</div>
+<div class="nav-item" onclick="openAdd()" data-t="create">E'lon berish</div>
+<div class="nav-item" onclick="openProfile()" data-t="profile">Profil</div>
+<div class="nav-item" onclick="openAdmin()" data-t="admin">Admin</div>
+<div style="margin-top:auto"><button class="btn btn-dark" style="width:100%" onclick="openLogin()" data-t="login">Kirish</button><p style="font-size:11px;color:#999;margin-top:8px" data-t="login_sub">Google yoki telefon raqami bilan</p></div>
+</div>
+<div class="main">
+<div class="lang">
+<button onclick="setLang('uz')">UZ</button>
+<button onclick="setLang('tj')">TJ</button>
+<button onclick="setLang('ru')">RU</button>
+<button onclick="setLang('en')">EN</button>
+</div>
+<div class="topbar"><input id="search" data-t-ph="search_ph" placeholder="Qidirish - iPhone 13, Muzlatgich"><button class="btn btn-dark" onclick="loadAds()">Qidirish</button></div>
+<div id="feed"></div>
+<div id="ad-slot" style="display:none;background:#f5f5f5;border-radius:12px;padding:16px;text-align:center;color:#888;font-size:13px">Reklama joyi - keyinroq yoqiladi</div>
+</div>
+<div class="modal" id="modal"><div class="box"><button onclick="closeModal()" style="float:right;border:0;background:#f5f5f5;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button><div id="modalContent"></div></div></div>
+<script>
+const API = ''; // Render dagi server linkini shu yerga yozasan: https://fives-server.onrender.com
+const LANGS = {
+  uz: { home:"Asosiy", search:"Qidirish", messages:"Xabarlar", create:"E'lon berish", profile:"Profil", admin:"Admin", login:"Kirish", login_sub:"Google yoki telefon raqami bilan", search_ph:"Qidirish - iPhone 13, Muzlatgich, Televizor", new_ad:"Yangi e'lon - Tekin", new_ad_sub:"To'lov yo'q. E'loningiz darhol chiqadi.", image:"RASM", title:"NOMI", address:"ADRES", desc:"TAVSIF", phone:"NOMER", price:"NARX", publish:"E'lonni chiqarish - Tekin", make_vip:"VIP qilish - 10 somon", vip_desc:"VIP e'lon 7 kun tepada turadi", follow:"Obuna bo'lish", message_btn:"Xabar yozish", call:"Qo'ng'iroq", save:"Saqlash" },
+  tj: { home:"Asosӣ", search:"Ҷустуҷӯ", messages:"Паёмҳо", create:"Эълон додан", profile:"Профил", admin:"Админ", login:"Воридшавӣ", login_sub:"Бо Google ё рақами телефон", search_ph:"Ҷустуҷӯ - iPhone 13, Яхдон", new_ad:"Эълони нав - Ройгон", new_ad_sub:"Пардохт нест.", image:"АКС", title:"НОМ", address:"СУРОҒА", desc:"ТАВСИФ", phone:"РАҚАМ", price:"НАРХ", publish:"Эълонро баровардан - Ройгон", make_vip:"VIP кардан - 10 сомонӣ", vip_desc:"VIP 7 рӯз дар боло", follow:"Обуна шудан", message_btn:"Паём навиштан", call:"Занг", save:"Нигоҳ доштан" },
+  ru: { home:"Главная", search:"Поиск", messages:"Сообщения", create:"Подать объявление", profile:"Профиль", admin:"Админ", login:"Войти", login_sub:"Через Google или номер телефона", search_ph:"Поиск - iPhone 13, Холодильник", new_ad:"Новое объявление - Бесплатно", new_ad_sub:"Без оплаты.", image:"ФОТО", title:"НАЗВАНИЕ", address:"АДРЕС", desc:"ОПИСАНИЕ", phone:"НОМЕР", price:"ЦЕНА", publish:"Опубликовать - Бесплатно", make_vip:"Сделать VIP - 10 сомони", vip_desc:"VIP 7 дней вверху", follow:"Подписаться", message_btn:"Написать", call:"Позвонить", save:"Сохранить" },
+  en: { home:"Home", search:"Search", messages:"Messages", create:"Post Ad", profile:"Profile", admin:"Admin", login:"Login", login_sub:"With Google or phone number", search_ph:"Search - iPhone 13, Fridge", new_ad:"New Ad - Free", new_ad_sub:"No payment.", image:"PHOTO", title:"TITLE", address:"ADDRESS", desc:"DESCRIPTION", phone:"PHONE", price:"PRICE", publish:"Publish - Free", make_vip:"Make VIP - 10 somoni", vip_desc:"VIP stays on top for 7 days", follow:"Follow", message_btn:"Message", call:"Call", save:"Save" }
+};
+let currentLang = localStorage.getItem('fives_lang') || 'uz';
+function t(k){ return LANGS[currentLang][k] || LANGS['uz'][k] || k; }
+function setLang(l){ currentLang = l; localStorage.setItem('fives_lang', l); renderUI(); loadAds(); }
+function renderUI(){
+  document.querySelectorAll('[data-t]').forEach(el => el.innerText = t(el.getAttribute('data-t')));
+  document.querySelectorAll('[data-t-ph]').forEach(el => el.placeholder = t(el.getAttribute('data-t-ph')));
+}
+async function loadAds(){
+  const res = await fetch(API + '/api/ads');
+  const ads = await res.json();
+  document.getElementById('feed').innerHTML = ads.map(a => `
+    <div class="post">
+      <div class="post-head"><img src="${a.seller_avatar || 'https://i.pravatar.cc/100'}"><div><b>${a.seller_name || 'Sotuvchi'}</b><br><span style="font-size:12px;color:#666">${a.city}</span></div>${a.is_vip ? '<span class="vip-badge">VIP</span>' : ''}</div>
+      <img class="main-img" src="${a.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800'}">
+      <div class="post-body"><div class="price">${a.price} somon</div><h3 style="margin:6px 0">${a.title}</h3><p style="color:#444;font-size:14px">${a.description || ''}</p>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="btn btn-dark" onclick="openChat(${a.user_id})">${t('message_btn')}</button>
+        <button class="btn" style="border:1px solid #e5e5e5;background:#fff" onclick="alert('Saqlandi')">${t('save')}</button>
+        <button class="btn btn-vip" onclick="makeVip(${a.id})">${t('make_vip')}</button>
+      </div></div>
+    </div>`).join('');
+}
+function openLogin(){
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modalContent').innerHTML = `<h2>${t('login')}</h2><p style="color:#666;margin:8px 0">${t('login_sub')}</p>
+  <button class="btn" style="width:100%;border:1px solid #e5e5e5;background:#fff" onclick="alert('Google Identity ulanadi')">Google bilan kirish</button>
+  <hr style="margin:14px 0;border:0;border-top:1px solid #eee">
+  <label>TELEFON</label><input id="phone" placeholder="+992 92 123 45 67">
+  <button class="btn btn-dark" style="width:100%" onclick="sendCode()">SMS kod yuborish</button>
+  <div id="codeBox" style="display:none;margin-top:10px"><label>SMS KOD</label><input id="code" placeholder="1234"><button class="btn btn-dark" style="width:100%" onclick="verifyCode()">Tasdiqlash</button></div>`;
+}
+async function sendCode(){
+  const phone = document.getElementById('phone').value;
+  const res = await fetch(API + '/api/auth/phone/send', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({phone}) });
+  const data = await res.json(); alert('Kod: ' + data.code); document.getElementById('codeBox').style.display = 'block';
+}
+async function verifyCode(){
+  const phone = document.getElementById('phone').value;
+  const code = document.getElementById('code').value;
+  const res = await fetch(API + '/api/auth/phone/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({phone, code, name:'Foydalanuvchi'}) });
+  const data = await res.json(); localStorage.setItem('token', data.token); alert('Kirish muvaffaqiyatli'); closeModal(); loadAds();
+}
+function openAdd(){
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modalContent').innerHTML = `<h2>${t('new_ad')}</h2><p style="color:#666;margin:8px 0">${t('new_ad_sub')}</p>
+  <label>${t('image')}</label><input type="file" id="imgFile" accept="image/*">
+  <label>${t('title')}</label><input id="t" placeholder="iPhone 13 128GB">
+  <label>${t('address')}</label><select id="c"><option>Xo'jand</option><option>Dushanbe</option><option>Isfara</option></select>
+  <input id="addr" placeholder="Ko'cha, uy">
+  <label>${t('desc')}</label><textarea id="d" rows="3"></textarea>
+  <label>${t('phone')}</label><input id="ph" placeholder="+992 92 123 45 67">
+  <label>${t('price')}</label><input id="pr" type="number" placeholder="2500">
+  <button class="btn btn-dark" style="width:100%;margin-top:10px" onclick="createAdFree()">${t('publish')}</button>`;
+}
+async function createAdFree(){
+  const token = localStorage.getItem('token');
+  if(!token){ alert(t('login')); openLogin(); return; }
+  const body = { title: document.getElementById('t').value, price: document.getElementById('pr').value, city: document.getElementById('c').value, address: document.getElementById('addr').value, description: document.getElementById('d').value, phone: document.getElementById('ph').value, category:'phone', brand:'iphone', condition:'used', image:'' };
+  await fetch(API + '/api/ads', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body: JSON.stringify(body) });
+  alert('E\'lon chiqdi'); closeModal(); loadAds();
+}
+async function makeVip(adId){
+  const token = localStorage.getItem('token');
+  if(!token){ alert(t('login')); openLogin(); return; }
+  const method = prompt('Tolov: Alif Mobi / Dushanbe City');
+  await fetch(API + '/api/vip', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body: JSON.stringify({ ad_id: adId, method: method || 'Alif Mobi' }) });
+  alert('VIP faollashdi'); closeModal(); loadAds();
+}
+function openProfile(){ alert('Profil - TikTok kabi setka'); }
+function openChat(id){ alert('Chat - ' + id); }
+function openAdmin(){ alert('Admin - faqat egasi'); }
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+renderUI(); loadAds();
+</script>
+</body>
+  </html>
