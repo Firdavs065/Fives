@@ -3,149 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIVES</title>
+<title>FIVES - Bozor</title>
+<link rel="stylesheet" href="style.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f2f2f2;padding-bottom:30px}
-header{background:#111;color:#fff;padding:12px;text-align:center;position:sticky;top:0;z-index:10}
-header h1{letter-spacing:4px}
-/* TIKTOK PROFIL */
-.profile{background:#fff;text-align:center;padding:20px 15px 15px}
-.avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid #fe2c55}
-.profile h2{font-size:22px;margin-top:8px}
-.profile p{color:#666;font-size:13px}
-.stats{display:flex;justify-content:center;gap:25px;margin:12px 0}
-.stats div{text-align:center}
-.stats b{display:block;font-size:18px}
-.stats span{font-size:12px;color:#666}
-.follow-btn{background:#fe2c55;color:#fff;border:none;padding:11px 40px;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}
-.follow-btn.followed{background:#eee;color:#111}
-.langs{display:flex;justify-content:center;gap:8px;padding:12px;background:#fff;margin-top:2px}
-.langs button{padding:8px 18px;border-radius:20px;border:1px solid #111;background:#fff;cursor:pointer;font-weight:bold}
+body{background:#f5f6f8}
+header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.08)}
+.top{display:flex;align-items:center;gap:10px;padding:12px;max-width:1100px;margin:auto}
+.logo{font-size:24px;font-weight:900;letter-spacing:3px;color:#0a7cff}
+.logo span{color:#ff6b00}
+.search{flex:1;display:flex;background:#f0f2f5;border-radius:10px;overflow:hidden}
+.search input{flex:1;border:none;background:none;padding:11px;outline:none}
+.search button{border:none;background:#0a7cff;color:#fff;padding:0 16px;font-weight:bold}
+.langs{display:flex;gap:5px}
+.langs button{padding:7px 10px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
 .langs button.active{background:#111;color:#fff}
-#feed{max-width:600px;margin:0 auto;padding:12px;display:flex;flex-direction:column;gap:16px}
-.post{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.post img{width:100%;height:300px;object-fit:cover}
-.post-body{padding:14px}
-.post-body h3{font-size:18px;margin-bottom:6px}
-.post-body p{font-size:14px;color:#555;line-height:1.5}
-.price{font-size:18px;font-weight:bold;margin-top:8px}
-.actions{display:flex;gap:12px;margin-top:12px}
-.actions button{flex:1;padding:10px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:15px;font-weight:bold}
-.actions button.liked{color:#fe2c55;border-color:#fe2c55}
-.order{display:block;text-align:center;background:#25D366;color:#fff;text-decoration:none;padding:12px;border-radius:10px;margin-top:12px;font-weight:bold}
-.badge{display:inline-block;background:#ffcc00;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:8px}
+.add-btn{background:#ff6b00;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
+.wrap{max-width:1100px;margin:auto;padding:14px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.cats button{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.cats button.active{background:#0a7cff;color:#fff;border-color:#0a7cff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-body{padding:11px}
+.card-body h3{font-size:14px;line-height:1.3;height:36px;overflow:hidden}
+.price{color:#0a7cff;font-weight:900;font-size:16px;margin-top:6px}
+.meta{font-size:12px;color:#888;margin-top:4px}
+.actions{display:flex;gap:6px;margin-top:9px}
+.actions button{flex:1;padding:8px;border-radius:8px;border:1px solid #eee;background:#f8f8f8;cursor:pointer}
+.actions button.liked{color:red;border-color:red}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;padding:16px;overflow:auto}
+.modal-box{background:#fff;max-width:600px;margin:30px auto;border-radius:16px;padding:18px}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:10px}
+.modal-box button{width:100%;padding:12px;background:#0a7cff;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px}
+.close{float:right;font-size:22px;cursor:pointer}
+.comments{margin-top:12px;background:#f8f8f8;padding:10px;border-radius:10px}
+.comments div{font-size:13px;padding:5px 0;border-bottom:1px solid #eee}
 </style>
 </head>
 <body>
-
-<header><h1>FIVES</h1></header>
-
-<!-- PROFIL TIKTOK KABI -->
-<div class="profile">
-<img class="avatar" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300">
-<h2>@fives_shop</h2>
-<p id="bio">Yangi mahsulotlar • Har kuni yangilik</p>
-<div class="stats">
-<div><b id="followCount">12.4K</b><span id="t-followers">Obunachilar</span></div>
-<div><b>128</b><span id="t-videos">Video</span></div>
-<div><b id="likeCount">89.2K</b><span id="t-likes">Layklar</span></div>
-</div>
-<button id="followBtn" class="follow-btn" onclick="toggleFollow()">+ Obuna bo'lish</button>
-</div>
-
+<header>
+<div class="top">
+<div class="logo">FIVES<span>.TJ</span></div>
+<div class="search"><input id="searchInput" placeholder="Qidiruv..."><button onclick="doSearch()">🔍</button></div>
 <div class="langs">
 <button onclick="setLang('uz',this)" class="active">UZ</button>
 <button onclick="setLang('ru',this)">RU</button>
 <button onclick="setLang('tj',this)">TJ</button>
 </div>
+<button class="add-btn" onclick="openAdd()">+ Elon</button>
+</div>
+</header>
 
-<div id="feed"></div>
+<div class="wrap">
+<div class="cats" id="cats"></div>
+<div class="grid" id="grid"></div>
+</div>
 
-<script>
-let lang = 'uz';
-let isFollowed = localStorage.getItem('fives_follow') === '1';
-let followers = 12400 + (isFollowed ? 1 : 0);
+<!-- ELON KO'RISH -->
+<div class="modal" id="viewModal">
+<div class="modal-box">
+<span class="close" onclick="closeModal('viewModal')">×</span>
+<div id="viewContent"></div>
+</div>
+</div>
 
-const TEXTS = {
-  uz: { bio:"Yangi mahsulotlar • Har kuni yangilik", followers:"Obunachilar", videos:"Video", likes:"Layklar", follow:"+ Obuna bo'lish", unfollow:"✓ Obuna bo'ldingiz", order:"Buyurtma berish", news:"YANGI", like:"❤️ Like" },
-  ru: { bio:"Новые товары • Новости каждый день", followers:"Подписчики", videos:"Видео", likes:"Лайки", follow:"+ Подписаться", unfollow:"✓ Вы подписаны", order:"Заказать", news:"НОВОЕ", like:"❤️ Лайк" },
-  tj: { bio:"Маҳсулотҳои нав • Ҳар рӯз хабар", followers:"Обуначиён", videos:"Видео", likes:"Лайкҳо", follow:"+ Обуна шудан", unfollow:"✓ Обуна шудед", order:"Фармоиш додан", news:"НАВ", like:"❤️ Лайк" }
-};
+<!-- ELON QO'SHISH -->
+<div class="modal" id="addModal">
+<div class="modal-box">
+<span class="close" onclick="closeModal('addModal')">×</span>
+<h3 id="addTitle">Elon berish</h3>
+<select id="f-cat"><option value="phone">📱 Telefon</option><option value="tech">🔌 Maishiy texnika</option><option value="comp">💻 Kompyuter</option></select>
+<input id="f-title" placeholder="Nomi: iPhone 13 Pro">
+<input id="f-price" placeholder="Narxi: 4500000">
+<input id="f-img" placeholder="Rasm linki (https://...)">
+<input id="f-city" placeholder="Shahar: Xo'jand">
+<input id="f-phone" placeholder="Telefon: +992 92...">
+<textarea id="f-desc" placeholder="Tavsif..."></textarea>
+<button onclick="addListing()">Elonni joylash</button>
+</div>
+</div>
 
-const NEWS = [
-  { img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800", price:"250 000 so'm", likes:1240,
-    title:{uz:"Yangi Smart Soat keldi",ru:"Пришли новые Смарт-часы",tj:"Соати Smart-и нав омад"},
-    text:{uz:"Yangi model, batareyasi 7 kun turadi. Chegirma bilan oling!",ru:"Новая модель, батарея держит 7 дней. Берите со скидкой!",tj:"Модели нав, батареяаш 7 рӯз кор мекунад. Бо тахфиф гиред!"} },
-  { img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800", price:"450 000 so'm", likes:980,
-    title:{uz:"Quloqchinlarda katta chegirma",ru:"Большая скидка на наушники",tj:"Дар гӯшмонакҳо тахфифи калон"},
-    text:{uz:"Ovoz sifati juda zo'r. Bugun buyurtma bering!",ru:"Очень качественный звук. Закажите сегодня!",tj:"Сифати овоз хеле хуб. Имрӯз фармоиш диҳед!"} },
-  { img:"https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800", price:"350 000 so'm", likes:2100,
-    title:{uz:"Yangi Smart Watch Pro",ru:"Новые Smart Watch Pro",tj:"Smart Watch Pro-и нав"},
-    text:{uz:"Do'konimizda yangi mahsulot paydo bo'ldi. Soni cheklangan!",ru:"В нашем магазине появился новый товар. Количество ограничено!",tj:"Дар мағозаи мо маҳсулоти нав пайдо шуд. Миқдор маҳдуд!"} }
-];
-
-function format(n){ return n>=1000 ? (n/1000).toFixed(1)+'K' : n; }
-
-function toggleFollow(){
-  isFollowed = !isFollowed;
-  localStorage.setItem('fives_follow', isFollowed ? '1' : '0');
-  followers += isFollowed ? 1 : -1;
-  updateProfile();
-}
-
-function updateProfile(){
-  const t = TEXTS[lang];
-  document.getElementById('bio').innerText = t.bio;
-  document.getElementById('t-followers').innerText = t.followers;
-  document.getElementById('t-videos').innerText = t.videos;
-  document.getElementById('t-likes').innerText = t.likes;
-  document.getElementById('followCount').innerText = format(followers);
-  const btn = document.getElementById('followBtn');
-  btn.innerText = isFollowed ? t.unfollow : t.follow;
-  btn.className = 'follow-btn' + (isFollowed ? ' followed' : '');
-}
-
-function render(){
-  updateProfile();
-  const feed = document.getElementById('feed');
-  feed.innerHTML = '';
-  NEWS.forEach((n,i)=>{
-    let liked = localStorage.getItem('like_'+i)==='1';
-    feed.innerHTML += `
-    <div class="post">
-      <img src="${n.img}">
-      <div class="post-body">
-        <span class="badge">${TEXTS[lang].news}</span>
-        <h3>${n.title[lang]}</h3>
-        <p>${n.text[lang]}</p>
-        <div class="price">${n.price}</div>
-        <div class="actions">
-          <button id="likeBtn${i}" onclick="toggleLike(${i},${n.likes})" class="${liked?'liked':''}">❤️ ${format(n.likes + (liked?1:0))}</button>
-          <button onclick="alert('Ulashildi!')">↗ Ulashish</button>
-        </div>
-        <a class="order" href="https://t.me/fives_shop" target="_blank">${TEXTS[lang].order}</a>
-      </div>
-    </div>`;
-  });
-}
-
-function toggleLike(i, base){
-  let liked = localStorage.getItem('like_'+i)==='1';
-  liked = !liked;
-  localStorage.setItem('like_'+i, liked ? '1' : '0');
-  const btn = document.getElementById('likeBtn'+i);
-  btn.innerText = '❤️ ' + format(base + (liked?1:0));
-  btn.className = liked ? 'liked' : '';
-}
-
-function setLang(l, btn){
-  lang = l;
-  document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  render();
-}
-render();
-</script>
+<script src="app.js"></script>
 </body>
-                                  </html>
+</html>
