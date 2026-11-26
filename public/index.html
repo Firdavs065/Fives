@@ -2,6 +2,7 @@
 <html lang="uz"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fives Learning</title>
+ <script src="vocab.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:#f6f8fb;color:#111827}
@@ -70,14 +71,7 @@ function renderLangs(){
 }
 window.pickLang = (id)=>{ selLang=id; localStorage.setItem('fives_lang',id); renderLangs(); loadVocab(); };
 
-const DEMO_VOCAB = [
- {id:'1', en:'Apple', ru:'Яблоко', ja:'りんご', uz:'Olma', category:'food', image:'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&auto=format&fit=crop'},
- {id:'2', en:'Bread', ru:'Хлеб', ja:'パン', uz:'Non', category:'food', image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop'},
- {id:'3', en:'Airport', ru:'Аэропорт', ja:'空港', uz:'Aeroport', category:'travel', image:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&auto=format&fit=crop'},
- {id:'4', en:'Meeting', ru:'Встреча', ja:'会議', uz:'Uchrashuv', category:'business', image:'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop'},
- {id:'5', en:'Family', ru:'Семья', ja:'家族', uz:'Oila', category:'family', image:'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&auto=format&fit=crop'},
- {id:'6', en:'Book', ru:'Книга', ja:'本', uz:'Kitob', category:'business', image:'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop'}
-];
+const DEMO_VOCAB = window.FIVES_VOCAB || [];
 async function loadVocab(){
  const cat = document.getElementById('cat').value;
  let list = DEMO_VOCAB.filter(v=>!cat||v.category===cat);
