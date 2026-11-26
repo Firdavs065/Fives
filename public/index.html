@@ -1,94 +1,108 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIVES - Маркетплейс</title>
+<!doctype html>
+<html lang="uz"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fives Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
-body{background:#f4f5f7;color:#111}
-header{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06);border-bottom:1px solid #eee}
-.top{display:flex;align-items:center;gap:12px;padding:14px 12px;max-width:1100px;margin:auto;flex-wrap:wrap}
-.logo{font-size:24px;font-weight:900;letter-spacing:2px;color:#0a7cff}
-.logo span{color:#111}
-.search{flex:1;display:flex;background:#f0f2f5;border-radius:8px;overflow:hidden;min-width:150px}
-.search input{flex:1;border:none;background:none;padding:11px;outline:none;font-size:14px}
-.search button{border:none;background:#0a7cff;color:#fff;padding:0 18px;font-weight:600;cursor:pointer}
-.langs{display:flex;gap:5px}
-.langs button{padding:7px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:13px}
-.langs button.active{background:#111;color:#fff;border-color:#111}
-.add-btn{background:#0a7cff;color:#fff;border:none;padding:11px 16px;border-radius:8px;font-weight:600;cursor:pointer}
-.login-btn{background:#fff;color:#111;border:1px solid #ddd;padding:11px 16px;border-radius:8px;font-weight:600;cursor:pointer}
-.wrap{max-width:1100px;margin:auto;padding:16px}
-.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px}
-.cats button{white-space:nowrap;padding:9px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:14px}
-.cats button.active{background:#111;color:#fff;border-color:#111}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid #eee}
-.card img{width:100%;height:180px;object-fit:cover}
-.card-body{padding:12px}
-.card-body h3{font-size:14px;line-height:1.4;height:38px;overflow:hidden;font-weight:600}
-.price{color:#0a7cff;font-weight:800;font-size:16px;margin-top:6px}
-.meta{font-size:12px;color:#888;margin-top:4px}
-.actions{display:flex;gap:6px;margin-top:10px}
-.actions button{flex:1;padding:8px;border-radius:8px;border:1px solid #eee;background:#f8f8f8;cursor:pointer;font-size:13px}
-.empty{text-align:center;padding:60px 20px;background:#fff;border-radius:16px;border:1px solid #eee}
-.empty h2{margin-bottom:8px;font-size:20px}
-.empty p{color:#888;margin-bottom:16px}
-.empty button{background:#0a7cff;color:#fff;border:none;padding:12px 22px;border-radius:8px;font-weight:600;cursor:pointer}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;padding:16px;overflow:auto}
-.modal-box{background:#fff;max-width:600px;margin:30px auto;border-radius:14px;padding:20px}
-.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:11px;margin:7px 0;border:1px solid #ddd;border-radius:8px;font-size:14px}
-.modal-box button{width:100%;padding:12px;background:#0a7cff;color:#fff;border:none;border-radius:8px;font-weight:600;margin-top:8px;cursor:pointer}
-.close{float:right;font-size:22px;cursor:pointer}
-.comments{margin-top:14px;background:#f8f8f8;padding:12px;border-radius:10px}
-.comments div{font-size:13px;padding:5px 0;border-bottom:1px solid #eee}
-</style>
-</head>
-<body>
-<header>
-<div class="top">
-<div class="logo">FIVES<span>.TJ</span></div>
-<div class="search"><input id="searchInput" placeholder="Поиск..."><button onclick="doSearch()">Найти</button></div>
-<div class="langs">
-<button onclick="setLang('uz',this)">UZ</button>
-<button onclick="setLang('ru',this)" class="active">RU</button>
-<button onclick="setLang('tj',this)">TJ</button>
-</div>
-<button class="login-btn" id="loginBtn" onclick="openLogin()">Вход</button>
-<button class="add-btn" onclick="openAdd()">Подать объявление</button>
-</div>
-</header>
-<div class="wrap">
-<div class="cats" id="cats"></div>
-<div class="grid" id="grid"></div>
-<div id="emptyBox"></div>
-</div>
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:#f6f8fb;color:#111827}
+header{height:64px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;padding:0 20px;position:sticky;top:0;z-index:10}
+.logo{font-weight:800;font-size:22px}.logo span{color:#16a34a}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}.hidden{display:none!important}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:20px}
+.btn{border:0;border-radius:12px;padding:14px 18px;font-weight:700;cursor:pointer;width:100%;font-size:15px}
+.btn-green{background:#16a34a;color:#fff}.btn-dark{background:#111827;color:#fff}.btn-white{background:#fff;border:1px solid #d1d5db}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.lang{border:1px solid #e5e7eb;border-radius:14px;padding:12px;cursor:pointer;background:#fff}.lang.active{border-color:#16a34a;background:#f0fdf4}
+.lang img{width:100%;height:110px;object-fit:cover;border-radius:10px}
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:700px){.vocab{grid-template-columns:1fr 1fr}}
+.vcard{border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#fff}.vcard img{width:100%;height:130px;object-fit:cover}
+select,input{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:12px;margin:8px 0}
+.pill{background:#f3f4f6;border-radius:99px;padding:6px 12px;font-weight:700;font-size:13px}
+</style></head><body>
+<header><div class="logo">FIVES <span>Learning</span></div><div style="display:flex;gap:8px;align-items:center"><span class="pill">⭐ <span id="hXP">0</span> XP</span><span class="pill">🔥 <span id="hStreak">0</span></span><select id="uiLang" style="width:auto;margin:0" onchange="setUILang(this.value)"><option value="uz">O'zbek</option><option value="en">English</option><option value="ru">Русский</option><option value="ja">日本語</option></select><span id="hName"></span></div></header>
+<main class="wrap">
+<section id="screenLogin" class="card" style="max-width:520px;margin:30px auto;text-align:center">
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1000&auto=format&fit=crop" style="width:100%;height:180px;object-fit:cover;border-radius:12px">
+<h1 id="t_title">Til o'rganishni boshlang</h1><p id="t_sub" style="color:#6b7280">5000+ so'z • Real suratlar • 4 til</p>
+<button class="btn btn-white" onclick="loginGoogle()">G Google bilan kirish</button><br><br>
+<button class="btn btn-dark" onclick="loginApple()"> Apple bilan kirish</button><br><br>
+<input id="email" placeholder="Email"><input id="pass" type="password" placeholder="Parol">
+<button class="btn btn-green" onclick="loginEmail()" id="t_login">Email bilan kirish</button>
+<p id="loginMsg" style="color:#dc2626"></p></section>
 
-<div class="modal" id="viewModal"><div class="modal-box"><span class="close" onclick="closeModal('viewModal')">×</span><div id="viewContent"></div></div></div>
+<section id="screenHome" class="hidden">
+<div class="card"><h2 id="t_choose">Tilni tanlang</h2><div class="grid" id="langGrid"></div></div><br>
+<div class="card"><h2 id="t_vocab">Lug'at</h2>
+<select id="cat" onchange="loadVocab()"><option value="">Barcha kategoriyalar</option><option value="food">Food / Ovqat</option><option value="travel">Travel / Sayohat</option><option value="business">Business / Biznes</option><option value="family">Family / Oila</option></select>
+<div class="vocab" id="vocabGrid"></div></div><br>
+<div class="card"><h2>🏆 Leaderboard</h2><div id="board"></div></div>
+</section></main>
 
-<div class="modal" id="addModal"><div class="modal-box"><span class="close" onclick="closeModal('addModal')">×</span><h3>Подать объявление</h3>
-<select id="f-cat"><option value="phone">Телефоны</option><option value="tech">Бытовая техника</option><option value="comp">Компьютеры</option></select>
-<input id="f-title" placeholder="Название: iPhone 13 Pro">
-<input id="f-price" placeholder="Цена: 4500000>
-  <input type="file" id="f-img-file" accept="image/*" onchange="previewImg(event)">
-<img id="imgPreview" style="width:100%;border-radius:10px;display:none;margin-top:8px;max-height:200px;object-fit:cover">
-<input id="f-city" placeholder="Город: Худжанд">
-<input id="f-phone" placeholder="Телефон: +992 92...">
-<textarea id="f-desc" placeholder="Описание..."></textarea>
-<button onclick="addListing()">Разместить объявление</button>
-</div></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<div class="modal" id="loginModal"><div class="modal-box"><span class="close" onclick="closeModal('loginModal')">×</span><h3>Вход / Регистрация</h3>
-<input id="login-email" placeholder="Email">
-<input id="login-pass" type="password" placeholder="Пароль">
-<button onclick="loginEmail()">Войти по Email</button>
-<button onclick="registerEmail()" style="background:#111">Зарегистрироваться</button>
-<button onclick="loginGoogle()" style="background:#fff;color:#111;border:1px solid #ddd">Войти через Google</button>
-<p id="loginMsg" style="font-size:13px;color:red;margin-top:8px"></p>
-</div></div>
+const firebaseConfig = { apiKey:"AIzaSyDMWI8zqKq8DdyjDZMeQtqnEB6XdbVCPL8", authDomain:"fives-f4be1.firebaseapp.com", projectId:"fives-f4be1", storageBucket:"fives-f4be1.firebasestorage.app", messagingSenderId:"556353785120", appId:"1:556353785120:web:6120cdc66f85e667fb9b45" };
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-<script type="module" src="app.js"></script>
-</body>
-  </html>
+const I18N = {
+ uz:{title:"Til o'rganishni boshlang",sub:"5000+ so'z • Real suratlar • 4 til",login:"Email bilan kirish",choose:"Tilni tanlang",vocab:"Lug'at"},
+ en:{title:"Start learning languages",sub:"5000+ words • Real photos • 4 languages",login:"Login with Email",choose:"Choose language",vocab:"Vocabulary"},
+ ru:{title:"Начните изучать языки",sub:"5000+ слов • Реальные фото • 4 языка",login:"Войти по Email",choose:"Выберите язык",vocab:"Словарь"},
+ ja:{title:"言語学習を始めましょう",sub:"5000語以上 • リアル写真 • 4言語",login:"メールでログイン",choose:"言語を選ぶ",vocab:"単語帳"}
+};
+let uiLang = localStorage.getItem('fives_ui')||'uz';
+function setUILang(l){ uiLang=l; localStorage.setItem('fives_ui',l); const t=I18N[l]; document.getElementById('t_title').textContent=t.title; document.getElementById('t_sub').textContent=t.sub; document.getElementById('t_login').textContent=t.login; document.getElementById('t_choose').textContent=t.choose; document.getElementById('t_vocab').textContent=t.vocab; renderLangs(); }
+window.setUILang = setUILang;
+
+const LANGS = [
+ {id:'en', name:'English', img:'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600&auto=format&fit=crop'},
+ {id:'ru', name:'Русский', img:'https://images.unsplash.com/photo-1513326738677-b964603b136d?w=600&auto=format&fit=crop'},
+ {id:'ja', name:'日本語', img:'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600&auto=format&fit=crop'},
+ {id:'uz', name:"O'zbek", img:'https://images.unsplash.com/photo-1564769625905-50e93615e769?w=600&auto=format&fit=crop'}
+];
+let selLang = localStorage.getItem('fives_lang')||'en';
+function renderLangs(){
+ document.getElementById('langGrid').innerHTML = LANGS.map(l=>`<div class="lang ${l.id===selLang?'active':''}" onclick="pickLang('${l.id}')"><img src="${l.img}"><b>${l.name}</b></div>`).join('');
+}
+window.pickLang = (id)=>{ selLang=id; localStorage.setItem('fives_lang',id); renderLangs(); loadVocab(); };
+
+const DEMO_VOCAB = [
+ {id:'1', en:'Apple', ru:'Яблоко', ja:'りんご', uz:'Olma', category:'food', image:'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&auto=format&fit=crop'},
+ {id:'2', en:'Bread', ru:'Хлеб', ja:'パン', uz:'Non', category:'food', image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop'},
+ {id:'3', en:'Airport', ru:'Аэропорт', ja:'空港', uz:'Aeroport', category:'travel', image:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&auto=format&fit=crop'},
+ {id:'4', en:'Meeting', ru:'Встреча', ja:'会議', uz:'Uchrashuv', category:'business', image:'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&auto=format&fit=crop'},
+ {id:'5', en:'Family', ru:'Семья', ja:'家族', uz:'Oila', category:'family', image:'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&auto=format&fit=crop'},
+ {id:'6', en:'Book', ru:'Книга', ja:'本', uz:'Kitob', category:'business', image:'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop'}
+];
+async function loadVocab(){
+ const cat = document.getElementById('cat').value;
+ let list = DEMO_VOCAB.filter(v=>!cat||v.category===cat);
+ try{ const token = await auth.currentUser?.getIdToken(); const r = await fetch(`/api/vocabulary?lang=${selLang}${cat?'&category='+cat:''}`, {headers: token?{Authorization:'Bearer '+token}:{}}); const j = await r.json(); if(j.data?.length) list = j.data; }catch{}
+ document.getElementById('vocabGrid').innerHTML = list.map(v=>`<div class="vcard"><img src="${v.image}" loading="lazy"><div style="padding:12px"><b>${v.word||v[selLang]||v.en}</b><div style="color:#6b7280;font-size:13px">${v.en} • ${v.ru} • ${v.ja} • ${v.uz}</div></div></div>`).join('');
+}
+window.loadVocab = loadVocab;
+
+window.loginGoogle = async ()=>{ try{ await signInWithPopup(auth, new GoogleAuthProvider()); }catch(e){ document.getElementById('loginMsg').textContent=e.message; } };
+window.loginApple = async ()=>{ try{ await signInWithPopup(auth, new OAuthProvider('apple.com')); }catch(e){ document.getElementById('loginMsg').textContent='Apple login: Firebase Console da Apple ni yoqish kerak. Hozir Google dan foydalaning.'; } };
+window.loginEmail = async ()=>{ const e=document.getElementById('email').value, p=document.getElementById('pass').value; try{ await signInWithEmailAndPassword(auth,e,p); }catch{ try{ await createUserWithEmailAndPassword(auth,e,p); }catch(err){ document.getElementById('loginMsg').textContent=err.message; } } };
+
+onAuthStateChanged(auth, async (user)=>{
+ if(!user) return;
+ document.getElementById('screenLogin').classList.add('hidden');
+ document.getElementById('screenHome').classList.remove('hidden');
+ document.getElementById('hName').textContent = user.displayName || user.email;
+ try{
+   const token = await user.getIdToken();
+   const r = await fetch('/api/user',{headers:{Authorization:'Bearer '+token}});
+   const u = await r.json();
+   if(u.xp!==undefined){ document.getElementById('hXP').textContent=u.xp; document.getElementById('hStreak').textContent=u.streak||0; }
+   const b = await fetch('/api/leaderboard').then(x=>x.json());
+   document.getElementById('board').innerHTML = (b.data||[]).map((x,i)=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eef2f7"><span>${i+1}. ${x.name||x.email}</span><b>${x.xp||0} XP</b></div>`).join('') || 'Hali hech kim yo\'q - birinchi bo\'ling!';
+ }catch{}
+});
+setUILang(uiLang); renderLangs(); loadVocab();
+</script></body></html>
